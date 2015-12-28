@@ -43,7 +43,35 @@ Hello = Relay.createContainer(Hello, {
 
 以下是一个简单的`Relay.RootContainer`
 ```js
-//todo
+import React from 'react'
+import Relay from 'react-relay'
+//`Hello`来自上一段代码
+import Hello from './hello'
+
+class UserRoot extends Relay.Route {
+  static routeName = 'User'
+  static queries = {
+    user: Component => Relay.QL`
+      query {
+        user(id: $userId) {
+          ${Hello.getFragment('user')}
+        }
+      }
+    `
+  }
+}
+
+class App extends React.Component {
+  render() {
+    const route = new UserRoot({userId: '4008123123'})
+    return (
+      <Relay.RootContainer
+        Component={Hello}
+        route={route}
+      />
+    )
+  }
+}
 ```
 
 ## Relay的Mock方案

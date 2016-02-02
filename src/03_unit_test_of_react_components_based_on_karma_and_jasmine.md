@@ -163,7 +163,7 @@ export function renderComponent(ReactElement) {
 jasmine提供了`afterEach`api，用于在执行完每个测试用例之后做清理工作。在测试react组件完毕或，会经常需要调用`ReactDOM.unmountComponentAtNode`api来卸载在`beforeEach`中渲染到dom的组件。如果测试用例中操作了`redux`的store状态，也应该在`afterEach`回调中将store的状态重置。
 
 ```js
-// src/Hello.js
+// src/components/Hello.js
 import React from 'react';
 
 export default class Hello extends React.Component {
@@ -184,11 +184,11 @@ export default class Hello extends React.Component {
     );
   }
 }
-// src/__tests__/Hello.spec.js
+// src/components/__tests__/Hello.spec.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Simulate} from 'react-addons-test-utils';
-import {renderComponent} from '../../utils/testHelper';// 见上文
+import {renderComponent} from '#/utils/testHelper';// 见上文
 import Hello from '../Hello';
 
 describe('Hello', () => {
@@ -265,9 +265,9 @@ exports.fetch = function (method, url, data) {
   });
 };
 
-// src/List.js
+// src/components/List.js
 import React from 'react';
-import {fetch} from '../utils/fetch';
+import {fetch} from '#/utils/fetch';
 export default class List extends React.Component {
   componentDidMount() {
     fetch('GET', '/api/list')
@@ -289,11 +289,11 @@ export default class List extends React.Component {
     );
   }
 }
-// src/__tests__/List.spec.js
+// src/components/__tests__/List.spec.js
 import ReactDOM from 'react-dom';
 import {Simulate} from 'react-addons-test-utils';
-import {config} from '../../utils/fetch';
-import {renderComponent} from '../../utils/testHelper';// 见上文
+import {config} from '#/utils/fetch';
+import {renderComponent} from '#/utils/testHelper';// 见上文
 import List from '../List';
 
 describe('List', () => {
@@ -351,7 +351,7 @@ export function renderConnectComponent(ReactElement) {
   return {instance, node};
 }
 
-// src/Hello.js
+// src/components/Hello.js
 import React from 'react';
 import {connect} from 'react-redux';
 class Hello extends React.Component {
@@ -363,12 +363,12 @@ export default connect(state => ({
   name: state.user.name
 }))(Hello);
 
-// src/__tests__/Hello.spec.js
+// src/components/__tests__/Hello.spec.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {renderConnectComponent} from '../utils/testHelper';
-import store from '../store';
+import {renderConnectComponent} from '#/utils/testHelper';
+import store from '#/store';
 import Hello from '../Hello';
 
 describe('Hello', () => {
